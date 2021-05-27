@@ -1,6 +1,7 @@
 # simple-exchange
 Simple order matching system simulating an stock exchange
 
+# Problem Statement
 <pre>
 Implement an order matching system for a stock exchange.
 
@@ -39,10 +40,14 @@ Should produce the following output to the console: (format:<sell-order-id> <qty
 `
 </pre>
 
-Assumptions:
+# Assumptions
 - Timestamp conficts can be arbitrarily resolved
 
 
+# Building instructions
 
+Run `mvn package` to build the source and run tests.
 
+Run `java -cp ./target/simple-exchange-1.0-SNAPSHOT.jar io.github.tnmy44.SimpleExchangeApp` to run the Main function.
 
+You can run `java -cp ./target/simple-exchange-1.0-SNAPSHOT.jar io.github.tnmy44.SimpleExchangeApp < input.txt` to run the Main function with a sample input.txt file. The expected output is in output.txt
