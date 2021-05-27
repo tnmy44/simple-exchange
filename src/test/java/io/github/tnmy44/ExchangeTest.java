@@ -3,6 +3,7 @@ package io.github.tnmy44;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 //import tnmy44.Exchange;
 
@@ -42,14 +43,8 @@ public class ExchangeTest
 		Order order2 = orderParser.parseOrder("#2 09:45 BAC sell 90 237.45");
 		Order order3 = orderParser.parseOrder("#3 09:47 BAC buy 80 238.10");
 		
-		
-		System.out.println(OrderParser.formatMatch(exchange.placeOrder(order2).stream().map(orderParser::formatMatch).collect(Collectors::toList)));
-		/*
-		System.out.println( OrderParser.formatMatch(exchange.placeOrder(order1));
-		System.out.println( OrderParser.formatMatch(exchange.placeOrder(order2));
-		System.out.println( OrderParser.formatMatch(exchange.placeOrder(order3));
-		*/
-		assertTrue( exchange != null );
-		//assertTrue( exchange2 != null );
+		Assert.assertTrue(exchange.placeOrder(order1).isEmpty());
+		Assert.assertTrue(exchange.placeOrder(order2).isEmpty());
+		Assert.assertEquals(orderParser.formatMatch(exchange.placeOrder(order3).get(0)), "#2 80 237.45 #3");
     }
 }
