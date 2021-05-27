@@ -40,7 +40,7 @@ Should produce the following output to the console: (format:<sell-order-id> <qty
 </pre>
 
 Assumptions:
-- timestamps are unique
+- Timestamp conficts can be arbitrarily resolved
 
 
 
