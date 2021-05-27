@@ -42,4 +42,58 @@ public class OrderBook{
 	public void addSellOrder(Order order){
 		sellOrders.add(order);
 	}
+	
+	
+	public List<Match> placeBuyOrder(Order order)
+	{	
+		Order bestSellOrder;
+		List<Match> matches = new ArrayList<Match>();
+		
+		
+		while(order.getQuantity() > 0 &&  (bestSellOrder = getBestSellOrder()) != null && order.getPrice() >= bestSellOrder.getPrice()){
+			long filledQuantity = order.getQuantity() < bestSellOrder.getQuantity() ? order.getQuantity() : bestSellOrder.getQuantity();
+			
+			Match match = new Match(bestSellOrder.getOrderId(), filledQuantity, bestSellOrder.getPrice(), order.getOrderId());
+			matches.add(match);
+			
+			order.fillQuantity(filledQuantity);
+			bestSellOrder.fillQuantity(filledQuantity);
+			
+			if(bestSellOrder.getQuantity() <= 0){
+				removeBestSellOrder();
+			}
+		}
+		
+		if(order.getQuantity() > 0)
+			addBuyOrder(order);
+		
+		return matches;
+	}
+	
+	public List<Match> placeSellOrder(Order order)
+	{	
+		Order bestBuyOrder;
+		List<Match> matches = new ArrayList<Match>();
+		
+		
+		while(order.getQuantity() > 0 && (bestBuyOrder = getBestBuyOrder()) != null && order.getPrice() <= bestBuyOrder.getPrice()){
+			long filledQuantity = order.getQuantity() < bestBuyOrder.getQuantity() ? order.getQuantity() : bestBuyOrder.getQuantity();
+			
+			Match match = new Match(order.getOrderId(), filledQuantity, order.getPrice(), bestBuyOrder.getOrderId());
+			matches.add(match);
+			
+			order.fillQuantity(filledQuantity);
+			bestBuyOrder.fillQuantity(filledQuantity);
+			
+			if(bestBuyOrder.getQuantity() <= 0){
+				removeBestBuyOrder();
+			}
+		}
+		
+		if(order.getQuantity() > 0)
+			addSellOrder(order);
+		
+		return matches;
+	}
+	
 }

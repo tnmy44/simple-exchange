@@ -24,58 +24,6 @@ public class Exchange
 		return exchange;
 	}
 	
-	private List<Match> placeBuyOrder(Order order, OrderBook orderBook)
-	{	
-		Order bestSellOrder;
-		List<Match> matches = new ArrayList<Match>();
-		
-		
-		while(order.getQuantity() > 0 &&  (bestSellOrder = orderBook.getBestSellOrder()) != null && order.getPrice() >= bestSellOrder.getPrice()){
-			long filledQuantity = order.getQuantity() < bestSellOrder.getQuantity() ? order.getQuantity() : bestSellOrder.getQuantity();
-			
-			Match match = new Match(bestSellOrder.getOrderId(), filledQuantity, bestSellOrder.getPrice(), order.getOrderId());
-			matches.add(match);
-			
-			order.fillQuantity(filledQuantity);
-			bestSellOrder.fillQuantity(filledQuantity);
-			
-			if(bestSellOrder.getQuantity() <= 0){
-				orderBook.removeBestSellOrder();
-			}
-		}
-		
-		if(order.getQuantity() > 0)
-			orderBook.addBuyOrder(order);
-		
-		return matches;
-	}
-	
-	private List<Match> placeSellOrder(Order order, OrderBook orderBook)
-	{	
-		Order bestBuyOrder;
-		List<Match> matches = new ArrayList<Match>();
-		
-		
-		while(order.getQuantity() > 0 && (bestBuyOrder = orderBook.getBestBuyOrder()) != null && order.getPrice() <= bestBuyOrder.getPrice()){
-			long filledQuantity = order.getQuantity() < bestBuyOrder.getQuantity() ? order.getQuantity() : bestBuyOrder.getQuantity();
-			
-			Match match = new Match(order.getOrderId(), filledQuantity, order.getPrice(), bestBuyOrder.getOrderId());
-			matches.add(match);
-			
-			order.fillQuantity(filledQuantity);
-			bestBuyOrder.fillQuantity(filledQuantity);
-			
-			if(bestBuyOrder.getQuantity() <= 0){
-				orderBook.removeBestBuyOrder();
-			}
-		}
-		
-		if(order.getQuantity() > 0)
-			orderBook.addSellOrder(order);
-		
-		return matches;
-	}
-	
 	public List<Match> placeOrder(Order order){
 		String stock = order.getStock();
 		if(!orderBookForStock.containsKey(stock))
@@ -84,8 +32,11 @@ public class Exchange
 		OrderBook orderBook = orderBookForStock.get(stock);
 		
 		if(order.getType() == OrderType.BUY)
-			return placeBuyOrder(order, orderBook);
+			return orderBook.placeBuyOrder(order);
 		
-		return placeSellOrder(order, orderBook);
+		if(order.getType() == OrderType.SELL)
+			return orderBook.placeSellOrder(order);
+		
+		throw new IllegalArgumentException("Invalid order type");
 	}
 }
