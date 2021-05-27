@@ -1,6 +1,7 @@
 # simple-exchange
 Simple order matching system simulating an stock exchange
 
+<pre>
 Implement an order matching system for a stock exchange.
 
 Traders place Buy or Sell orders for a stock indicating the quantity and price.
@@ -17,6 +18,7 @@ Write a program that accepts a list of orders from standard input and writes out
 
 e.g. The following input (format:<order-id> <time> <stock> <buy/sell> <qty> <price>):
 
+`
 #1 09:45 BAC sell 100 240.10
 #2 09:45 BAC sell 90 237.45 
 #3 09:47 BAC buy 80 238.10 
@@ -25,16 +27,17 @@ e.g. The following input (format:<order-id> <time> <stock> <buy/sell> <qty> <pri
 #7 09:52 TCS buy 10 1001.10
 #8 10:01 BAC sell 20 240.10
 #9 10:02 BAC buy 150 242.70
-
+`
+  
 Should produce the following output to the console: (format:<sell-order-id> <qty> <sell-price> <buy-order-id>):
-
+`
 #2 80 237.45 #3
 #2 10 237.45 #6
 #1 100 240.10 #9
 #8 20 240.10 #9
 #5 30 241.50 #9
-
-
+`
+</pre>
 
 Assumptions:
 - timestamps are unique
