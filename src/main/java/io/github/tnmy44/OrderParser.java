@@ -43,11 +43,8 @@ class OrderParser
 		return(order);
 	}
 	
-	
-	
 	public String formatMatch(Match match)
 	{
-		//System.out.println(match);
-		return("MATCHED");
+		return String.format("#%d %d %.2f #%d", match.sellOrderId, match.quantity, match.price, match.buyOrderId);
 	}
 }	

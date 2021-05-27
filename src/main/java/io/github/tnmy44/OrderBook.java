@@ -23,7 +23,6 @@ public class OrderBook{
 	
 	public void addBuyOrder(Order order){
 		buyOrders.add(order);
-		//System.out.println(String.format("best buy order: %s", getBestBuyOrder()));
 	}
 	
 	public void removeBestBuyOrder(){
@@ -42,6 +41,5 @@ public class OrderBook{
 	}
 	public void addSellOrder(Order order){
 		sellOrders.add(order);
-		//System.out.println(String.format("best buy order: %s", getBestSellOrder()));
 	}
 }

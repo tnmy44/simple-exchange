@@ -1,20 +1,18 @@
 package io.github.tnmy44;
 
 import java.util.Scanner;
-//import java.time.Timestamp;
 import java.util.*;
 
 
 
 public class Exchange
 {
-	
 	private HashMap<String,OrderBook> orderBookForStock;
 
 	//Singleton pattern
 	private static Exchange exchange;
 	
-	protected Exchange()
+	private Exchange()
 	{
 		orderBookForStock = new HashMap<String,OrderBook>();
 	}
@@ -90,35 +88,4 @@ public class Exchange
 		
 		return placeSellOrder(order, orderBook);
 	}
-	
-}
-
-
-
-class SimpleExchange extends Exchange
-{
-
-	public SimpleExchange(){
-	}
-
-	
-	public static void main(String args[])
-	{
-		
-		Exchange exchange = new SimpleExchange();
-		
-		Scanner input = new Scanner(System.in);
-		OrderParser orderParser = new OrderParser();
-		
-		while (input.hasNextLine()) {
-			String line = input.nextLine();
-			Order order = orderParser.parseOrder(line);
-			List<Match> matches = exchange.placeOrder(order);
-			//for(Match match : matches)
-			//	System.out.println(orderParser.formatMatch(match));
-		}
-
-		
-	}
-	
 }

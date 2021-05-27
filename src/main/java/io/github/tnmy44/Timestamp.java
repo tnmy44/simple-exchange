@@ -28,8 +28,3 @@ class Timestamp implements Comparable<Timestamp>{
 
 
 
-enum OrderType{
-	BUY,
-	SELL,
-}
-
